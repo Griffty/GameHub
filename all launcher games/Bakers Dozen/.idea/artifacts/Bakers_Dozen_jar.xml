@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Bakers Dozen:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Bakers_Dozen_jar</output-path>
+    <root id="archive" name="Bakers Dozen.jar">
+      <element id="module-output" name="Bakers Dozen" />
+    </root>
+  </artifact>
+</component>
