@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class User extends JFrame {
     private  String name = "";
-    private  String TAG = "0";
+    private  String TAG = "-1";
     private  String pass = "";
     private int index;
     private final Dimension windowSize;
@@ -20,10 +20,11 @@ public class User extends JFrame {
     public WatchYourStepStatistic watchYourStepStatistic;
     public Statistic wizardYesOrNoStatistic;
     public WordBuilderStatistic wordBuilderStatistic;
-    private CreateUser createUser;
+    private JFrame jFrame;
 
 
-    User(Dimension windowSize, int index){
+    User(Dimension windowSize, int index, JFrame jFrame){
+        this.jFrame = jFrame;
         this.index = index;
         this.windowSize = windowSize;
         createUser();
@@ -40,7 +41,7 @@ public class User extends JFrame {
         newUser(guest);
         windowSize = null;
     }
-    private void createUser(){CreateUser createUser = new CreateUser(windowSize, this);}
+    private void createUser(){CreateUser createUser = new CreateUser(windowSize, this, jFrame);}
 
 
     private void newUser(String username){
@@ -80,5 +81,4 @@ public class User extends JFrame {
         return pass;
     }
 
-    public CreateUser getCreateUser() {return createUser;}
 }

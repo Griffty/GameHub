@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static com.griffty.Launcher.profileChooser.user;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 
@@ -15,6 +14,7 @@ public class GameMenu extends JFrame {
     private Font TopFont = new Font("comic sans ms", Font.BOLD, 30);
     private final GamePanel[] allGames = {null, null, null, null, null, null};
     public static final String[] allGamesNames = {"Baker's Dozen", "Word Builder", "Maze", "Wizard Yes Or No", "Sliding Tiles", "Watch Your Step"};
+    private final User user = profileChooser.user;
     GameMenu(){
         try {
             String className = UIManager.getSystemLookAndFeelClassName();
@@ -50,6 +50,7 @@ public class GameMenu extends JFrame {
             });
             centralPanel.add(allGames[i]);
         }
+        System.out.println(user);
         if (user!=null) {
             JPanel bottomPanel = new JPanel();
             mainPanel.add(bottomPanel);

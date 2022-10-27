@@ -69,13 +69,11 @@ public class Profile extends JPanel {
     }
 
     public void setUser(User user) {
-
         this.user = user;
         if (user!=null){
             name = user.getName();
             TAG = user.getTAG();
         }
-        repaint();
     }
 
     public boolean hasUser(){

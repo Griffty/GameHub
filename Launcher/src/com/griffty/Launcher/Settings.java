@@ -57,6 +57,6 @@ public class Settings extends JFrame {
     }
     public static void saveSettings(){
         darkTheme = darkThemeChecker;
-        Launcher.darkTheme();
+//        Launcher.darkTheme();
     }
 }

@@ -6,8 +6,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -24,10 +22,9 @@ public class profileChooser extends JFrame{
     public static User user = null;
     public static Profile[] profiles = {null, null, null};
     private static Profile clickedPanel;
-    private static JButton clickedButton;
     private static final File[] DATAFILE = new File[3];
     private static final String DOCUMENTS = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+ "\\GameHub\\";
-    private Login login = null;
+    private final JFrame frame = this;
 
 
     private void updateInterfaceData() {
@@ -49,76 +46,75 @@ public class profileChooser extends JFrame{
     }
     static void updateUserData(){
         File folder = new File(DOCUMENTS);
-        folder.mkdir();
-        File[] listOfFiles = folder.listFiles();
-        try {
-            assert listOfFiles != null;
-            for (File account : listOfFiles) {
-                BufferedReader in = new BufferedReader(new FileReader(account));
-                String version = in.readLine();
-                System.out.println(version);
-                String s = "";
-                int index;
-                s = in.readLine();
-                index = Integer.parseInt(s.substring(s.indexOf(":")+2));
+        if (folder.mkdir()){
+            File[] listOfFiles = folder.listFiles();
+            try {
+                assert listOfFiles != null;
+                for (File account : listOfFiles) {
+                    BufferedReader in = new BufferedReader(new FileReader(account));
+                    String version = in.readLine();
+                    System.out.println(version);
+                    String s;
+                    int index;
+                    s = in.readLine();
+                    index = Integer.parseInt(s.substring(s.indexOf(":")+2));
 
-                users[index] = new User(index);
-                s = in.readLine();
-                users[index].setName(s.substring(s.indexOf(":")+2));
-                s = in.readLine();
-                users[index].setTAG(s.substring(s.indexOf(":")+2));
-                s = in.readLine();
-                users[index].setPass(s.substring(s.indexOf(":")+2));
-                in.readLine();
-                s = in.readLine();
-                users[index].bakersDozenStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].bakersDozenStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].bakersDozenStatistic.setCardsMoved(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                in.readLine();
-                s = in.readLine();
-                users[index].wordBuilderStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].wordBuilderStatistic.setLettersUsed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                in.readLine();
-                s = in.readLine();
-                users[index].mazeStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].mazeStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].mazeStatistic.setCellsPassed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                in.readLine();
-                s = in.readLine();
-                users[index].wizardYesOrNoStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                in.readLine();
-                s = in.readLine();
-                users[index].slidingTitlesStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].slidingTitlesStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].slidingTitlesStatistic.setTimesClicked(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                in.readLine();
-                s = in.readLine();
-                users[index].watchYourStepStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].watchYourStepStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                s = in.readLine();
-                users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                in.readLine();
-                in.close();
-//                System.out.println(users[index].getIndex());
-//                System.out.println(users[index].getName());
-//                System.out.println(users[index].getTAG());
+                    users[index] = new User(index);
+                    s = in.readLine();
+                    users[index].setName(s.substring(s.indexOf(":")+2));
+                    s = in.readLine();
+                    users[index].setTAG(s.substring(s.indexOf(":")+2));
+                    s = in.readLine();
+                    users[index].setPass(s.substring(s.indexOf(":")+2));
+                    in.readLine();
+                    s = in.readLine();
+                    users[index].bakersDozenStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].bakersDozenStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].bakersDozenStatistic.setCardsMoved(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    in.readLine();
+                    s = in.readLine();
+                    users[index].wordBuilderStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].wordBuilderStatistic.setLettersUsed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    in.readLine();
+                    s = in.readLine();
+                    users[index].mazeStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].mazeStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].mazeStatistic.setCellsPassed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    in.readLine();
+                    s = in.readLine();
+                    users[index].wizardYesOrNoStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    in.readLine();
+                    s = in.readLine();
+                    users[index].slidingTitlesStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].slidingTitlesStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].slidingTitlesStatistic.setTimesClicked(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    in.readLine();
+                    s = in.readLine();
+                    users[index].watchYourStepStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].watchYourStepStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    s = in.readLine();
+                    users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                    in.readLine();
+                    in.close();
 
-                DATAFILE[index] = account;
-                System.out.println(DATAFILE[index].getName());
+                    DATAFILE[index] = account;
+                    System.out.println(DATAFILE[index].getName());
 
+                }
+            } catch (Exception e) {
+                String message = "Data files cannot be read";
+                JOptionPane.showMessageDialog(null, message);
             }
-        } catch (Exception e) {
-            String message = "Data files cannot be read";
-            JOptionPane.showMessageDialog(null, message);
         }
+
     }
 
     profileChooser(Dimension windowSize){
@@ -168,7 +164,7 @@ public class profileChooser extends JFrame{
                     if (clickedPanel.hasUser()){
                         login();
                     }else{
-                        users[clickedPanel.getIndex()] = new User(windowSize, clickedPanel.getIndex());
+                        users[clickedPanel.getIndex()] = new User(windowSize, clickedPanel.getIndex(), frame);
                     }
                 }
             });
@@ -184,12 +180,7 @@ public class profileChooser extends JFrame{
             deleteButton[i] = new JButton(deleteButtonIcon);
             deleteButton[i].setEnabled(false);
 
-            deleteButton[i].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    deleteUser((JButton) e.getSource());
-                }
-            });
+            deleteButton[i].addActionListener(e -> deleteUser((JButton) e.getSource()));
 
         }
         updateDeleteButtons();
@@ -204,12 +195,7 @@ public class profileChooser extends JFrame{
         JButton playAsGuest = new JButton("Play as guest");
         playAsGuest.setFont(PlayAsGuestFont);
         playAsGuest.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playAsGuest.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameMenu();
-            }
-        });
+        playAsGuest.addActionListener(e -> gameMenu());
         centralPanel.add(playAsGuest);
         centralPanel.add(Box.createRigidArea(new Dimension(0, 30)));
         if (darkTheme){
@@ -307,6 +293,8 @@ public class profileChooser extends JFrame{
             if (clickedButton == deleteButton[i]){
                 if (DATAFILE[i].delete()){
                     profiles[i].setUser(null);
+                    users[i] = null;
+                    frame.repaint();
                     deleteButton[i].setEnabled(false);
                 }else {
                     String message = "User cannot be deleted";
@@ -324,14 +312,19 @@ public class profileChooser extends JFrame{
     }
     public static void repaintPanel(){
         clickedPanel.setUser(users[clickedPanel.getIndex()]);
-        clickedPanel.repaint();
         deleteButton[clickedPanel.getIndex()].setEnabled(true);
+        if (users[clickedPanel.getIndex()].getTAG().equals("-1")) {
+            users[clickedPanel.getIndex()] = null;
+        }else {
+            profileChooser.saveData();
+            profileChooser.updateUserData();
+        }
         clickedPanel = null;
         updateDeleteButtons();
 
     }
     private void login(){
-        login = new Login(windowSize, clickedPanel.getUser(), this);
+        Login login = new Login(windowSize, clickedPanel.getUser(), this);
     }
     private void gameMenu(){
         new GameMenu();
@@ -344,7 +337,4 @@ public class profileChooser extends JFrame{
         new Launcher();
     }
 
-    public Dimension getWindowSize() {
-        return windowSize;
-    }
 }

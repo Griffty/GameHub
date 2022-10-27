@@ -13,8 +13,10 @@ public class CreateUser extends JFrame {
     private final Font TopFont = new Font("comic sans ms", Font.BOLD, 30);
     private final Font buttonFont = new Font("comic sans ms", Font.BOLD, 20);
     private final Font mainTextFont = new Font(Font.DIALOG, Font.BOLD, 20);
+    private final JFrame frame;
 
-    public CreateUser(Dimension windowSize, User user) {
+    public CreateUser(Dimension windowSize, User user, JFrame frame) {
+        this.frame=frame;
         this.user = user;
         this.windowSize = windowSize;
         initGUI();
@@ -93,8 +95,7 @@ public class CreateUser extends JFrame {
         user.setTAG(rand.nextInt(899)+100 + "");
         user.setName(username);
         user.setPass(password);
-        profileChooser.saveData();
-        profileChooser.updateUserData();
+        frame.repaint();
         profileChooser.repaintPanel();
     }
 }
