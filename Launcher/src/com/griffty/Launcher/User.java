@@ -8,9 +8,9 @@ import java.awt.*;
 
 
 public class User extends JFrame {
-    private  String name = "a";
+    private  String name = "";
     private  String TAG = "0";
-    private  String pass = "b";
+    private  String pass = "";
     private int index;
     private final Dimension windowSize;
     public BakersDozenStatistic bakersDozenStatistic;
