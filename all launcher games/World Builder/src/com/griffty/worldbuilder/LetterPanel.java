@@ -45,6 +45,7 @@ public class LetterPanel extends JPanel {
         if (image == null){
             try {
                 InputStream input = getClass().getResourceAsStream(IMAGENAME);
+                assert input != null;
                 image = ImageIO.read(input);
             }catch (IOException e){
                 String message = "Image file can't be opened";

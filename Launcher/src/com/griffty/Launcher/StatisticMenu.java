@@ -9,8 +9,7 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 
 public class StatisticMenu extends JFrame {
-    private JPanel mainPanel = new JPanel();
-    private Font TopFont = new Font("comic sans ms", Font.BOLD, 30);
+    private final JPanel mainPanel = new JPanel();
     private final StatisticPanel[] allGames = {null, null, null, null, null, null};
     public static final String[] allGamesNames = {"Baker's Dozen", "Word Builder", "Maze", "Wizard Yes Or No", "Sliding Tiles", "Watch Your Step"};
     StatisticMenu(){

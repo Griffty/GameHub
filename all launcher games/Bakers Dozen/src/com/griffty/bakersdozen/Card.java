@@ -5,10 +5,10 @@ import java.awt.*;
 import static java.awt.Color.black;
 
 public class Card {
-    private String rank = "";
-    private int suit = -1;
-    private int value = 0;
-    private Image image = null;
+    private final String rank;
+    private final int suit;
+    private final int value;
+    private final Image image;
     private static int width = 0;
     private static int height = 0;
     private int x = 0;
@@ -62,11 +62,7 @@ public class Card {
     }
 
     public boolean contains(int pointX, int pointY){
-        boolean contains = false;
-        if (pointX >= x && pointX <= x+width && pointY>= y && pointY <= y+height){
-            contains = true;
-        }
-        return contains;
+        return pointX >= x && pointX <= x + width && pointY >= y && pointY <= y + height;
     }
     public boolean isNear(int pointX, int pointY){
         boolean isNear =false;
@@ -81,8 +77,7 @@ public class Card {
     public boolean isNear(Card card){
         int pointX = card.getX();
         int pointY = card.getY();
-        boolean isNear = isNear(pointX, pointY);
-        return isNear;
+        return isNear(pointX, pointY);
     }
 
 }

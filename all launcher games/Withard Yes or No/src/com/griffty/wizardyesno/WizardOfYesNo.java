@@ -13,9 +13,6 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 
 public class WizardOfYesNo extends JFrame {
-
-
-    private String answer;
     private User user;
     public WizardOfYesNo() {
         user = profileChooser.user;
@@ -49,11 +46,6 @@ public class WizardOfYesNo extends JFrame {
             String className = UIManager.getCrossPlatformLookAndFeelClassName() ;
             UIManager.setLookAndFeel(className);}
         catch (Exception ignored) {}
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new WizardOfYesNo();
-            }
-            }
-        );
+        EventQueue.invokeLater(WizardOfYesNo::new);
     }
 }

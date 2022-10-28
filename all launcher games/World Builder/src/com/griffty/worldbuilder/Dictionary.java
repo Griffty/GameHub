@@ -7,14 +7,15 @@ import java.util.ArrayList;
 public class Dictionary {
     private static final String FILENAME = "/enable1_3-15.txt";
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private ArrayList<String>[] wordList = (ArrayList<String>[]) new ArrayList[26];
+    private final ArrayList<String>[] wordList = (ArrayList<String>[]) new ArrayList[26];
 
     Dictionary(){
         for (int i = 0; i<26; i++){
-            wordList[i] = new ArrayList<String>();
+            wordList[i] = new ArrayList<>();
         }
         try{
             InputStream input = getClass().getResourceAsStream(FILENAME);
+            assert input != null;
             BufferedReader in = new BufferedReader(new InputStreamReader(input));
             String word = in.readLine();
             while(!(word == null)){

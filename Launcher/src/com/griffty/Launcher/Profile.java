@@ -8,7 +8,7 @@ import static java.awt.Color.*;
 public class Profile extends JPanel {
     private final Dimension windowSize;
     private int size;
-    private int index = -1;
+    private final int index;
     private  User user = null;
     private String name = "";
     private String TAG = "-1";
@@ -21,12 +21,6 @@ public class Profile extends JPanel {
         this.index = i;
         nameFM = getFontMetrics(nameFont);
         setBackground(black);
-    }
-    Profile(Dimension windowSize, int i, User user){
-        this.user = user;
-        this.windowSize = windowSize;
-        this.index = i;
-        nameFM = getFontMetrics(nameFont);
     }
 
     @Override

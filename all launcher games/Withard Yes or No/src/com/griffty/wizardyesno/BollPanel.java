@@ -7,11 +7,10 @@ import java.util.Random;
 import static java.awt.Color.black;
 
 public class BollPanel extends JPanel {
-    private Random rand = new Random();
-    private Font font;
-    private FontMetrics fontMetrics;
-    private int size = 400;
-    private String phrase = "";
+    private final Random rand = new Random();
+    private final Font font;
+    private final FontMetrics fontMetrics;
+    private final int size = 400;
     public static final String[] Answers = {"Yes", "No", "Maybe", "You can try", "Definitely no", "Definitely yes", "Most likely", "Very doubtful"};
 
     BollPanel(){
@@ -35,7 +34,7 @@ public class BollPanel extends JPanel {
         g.fillRoundRect(0, size-size/10, size, size/10, 5, 5);
         g.setFont(font);
         g.setColor(black);
-        phrase = Answers[rand.nextInt(Answers.length)];
+        String phrase = Answers[rand.nextInt(Answers.length)];
         int width = fontMetrics.stringWidth(phrase);
         g.drawString(phrase, (size-width)/2, size/2);
     }

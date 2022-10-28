@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 class GamePanel extends JPanel {
-    private String gameName = "";
+    private final String gameName;
     private BufferedImage image = null;
     private final int size = 300;
     private final Font gameNameFont = new Font(Font.SANS_SERIF, Font.BOLD, 20);

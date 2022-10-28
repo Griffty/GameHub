@@ -11,8 +11,8 @@ public class TerrainButton extends JButton {
     @Serial
     private static final long serialVersionUID = 1L;
     private static final int SIZE = 50;
-    private int row = 0;
-    private int col = 0;
+    private final int row;
+    private final int col;
     private int nextToHoles = 0;
     private boolean hole = false;
     private boolean revealed = false;

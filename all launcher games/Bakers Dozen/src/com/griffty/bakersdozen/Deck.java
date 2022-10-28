@@ -16,13 +16,14 @@ public class Deck{
     private static final int CARDWIDTH = 30;
     private static final int CARDHEIGHT = 50;
     private static final String FILENAME = "/cards.png";
-    private ArrayList<Card> cards = new ArrayList<>();
+    private final ArrayList<Card> cards = new ArrayList<>();
 
 
     Deck(){
         Random rand = new Random();
         try {
             InputStream input = getClass().getResourceAsStream(FILENAME);
+            assert input != null;
             BufferedImage cardsImage = ImageIO.read(input);
             for(int suit = 0; suit<SUITSYMBOLS.length; suit++){
                 for (int rank = 0; rank< RANKS.length; rank++){

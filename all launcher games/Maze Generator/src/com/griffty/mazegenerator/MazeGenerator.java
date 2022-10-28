@@ -59,6 +59,7 @@ public class MazeGenerator extends JFrame {
             JMenu menu = new JMenu();
         try {
             InputStream input = getClass().getResourceAsStream("/Settings-48.png");
+            assert input != null;
             BufferedImage image = ImageIO.read(input);
             menu.setIcon(new ImageIcon(image));
         }catch (Exception e){

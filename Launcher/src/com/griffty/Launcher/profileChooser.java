@@ -25,6 +25,7 @@ public class profileChooser extends JFrame{
     private static final File[] DATAFILE = new File[3];
     private static final String DOCUMENTS = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+ "\\GameHub\\";
     private final JFrame frame = this;
+    private static boolean anotherGUIOpened = false;
 
 
     private void updateInterfaceData() {
@@ -33,8 +34,8 @@ public class profileChooser extends JFrame{
         int size = Math.min(width, height);
         PlayAsGuestFont = new Font("comic sans ms", Font.BOLD, size / 20);
         try {
-            String DELETEBUTTONFILANAME = "/bin.png";
-            InputStream deleteButtonInput = getClass().getResourceAsStream(DELETEBUTTONFILANAME);
+            String DeleteButtonFileName = "/bin.png";
+            InputStream deleteButtonInput = getClass().getResourceAsStream(DeleteButtonFileName);
             assert deleteButtonInput != null;
             deleteButtonIcon = new ImageIcon(ImageIO.read(deleteButtonInput));
 
@@ -46,73 +47,76 @@ public class profileChooser extends JFrame{
     }
     static void updateUserData(){
         File folder = new File(DOCUMENTS);
-        if (folder.mkdir()){
-            File[] listOfFiles = folder.listFiles();
-            try {
-                assert listOfFiles != null;
-                for (File account : listOfFiles) {
-                    BufferedReader in = new BufferedReader(new FileReader(account));
-                    String version = in.readLine();
-                    System.out.println(version);
-                    String s;
-                    int index;
-                    s = in.readLine();
-                    index = Integer.parseInt(s.substring(s.indexOf(":")+2));
+        if (!folder.mkdir()){System.out.println("Folder already exist");}
+        File[] listOfFiles = folder.listFiles();
+        try {
+            assert listOfFiles != null;
+            for (File account : listOfFiles) {
+                BufferedReader in = new BufferedReader(new FileReader(account));
+                String version = in.readLine();
+                System.out.println(version);
+                String s;
+                int index;
+                s = in.readLine();
+                index = Integer.parseInt(s.substring(s.indexOf(":")+2));
 
-                    users[index] = new User(index);
-                    s = in.readLine();
-                    users[index].setName(s.substring(s.indexOf(":")+2));
-                    s = in.readLine();
-                    users[index].setTAG(s.substring(s.indexOf(":")+2));
-                    s = in.readLine();
-                    users[index].setPass(s.substring(s.indexOf(":")+2));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].bakersDozenStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].bakersDozenStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].bakersDozenStatistic.setCardsMoved(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].wordBuilderStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].wordBuilderStatistic.setLettersUsed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].mazeStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].mazeStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].mazeStatistic.setCellsPassed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].wizardYesOrNoStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].slidingTitlesStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].slidingTitlesStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].slidingTitlesStatistic.setTimesClicked(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].watchYourStepStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].watchYourStepStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    s = in.readLine();
-                    users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":")+2)));
-                    in.readLine();
-                    in.close();
+                users[index] = new User(index);
+                s = in.readLine();
+                users[index].setName(s.substring(s.indexOf(":")+2));
+                s = in.readLine();
+                users[index].setTAG(s.substring(s.indexOf(":")+2));
+                s = in.readLine();
+                users[index].setPass(s.substring(s.indexOf(":")+2));
+                in.readLine();
+                s = in.readLine();
+                users[index].bakersDozenStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].bakersDozenStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].bakersDozenStatistic.setCardsMoved(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].wordBuilderStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].wordBuilderStatistic.setLettersUsed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].mazeStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].mazeStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].mazeStatistic.setCellsPassed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].wizardYesOrNoStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].slidingTitlesStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].slidingTitlesStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].slidingTitlesStatistic.setTimesClicked(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].watchYourStepStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].watchYourStepStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                in.close();
+                System.out.println(users[index].getName());
 
-                    DATAFILE[index] = account;
-                    System.out.println(DATAFILE[index].getName());
+                System.out.println(users[index].getPass());
 
-                }
-            } catch (Exception e) {
-                String message = "Data files cannot be read";
-                JOptionPane.showMessageDialog(null, message);
+                System.out.println(users[index].getTAG());
+                DATAFILE[index] = account;
+                System.out.println(DATAFILE[index].getName());
+
             }
+        } catch (Exception e) {
+            String message = "Data files cannot be read";
+            JOptionPane.showMessageDialog(null, message);
         }
 
     }
@@ -160,11 +164,12 @@ public class profileChooser extends JFrame{
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     clickedPanel = (Profile) e.getSource();
-
-                    if (clickedPanel.hasUser()){
-                        login();
-                    }else{
-                        users[clickedPanel.getIndex()] = new User(windowSize, clickedPanel.getIndex(), frame);
+                    if (!anotherGUIOpened) {
+                        if (clickedPanel.hasUser()){
+                           login();
+                        }else{
+                            users[clickedPanel.getIndex()] = new User(windowSize, clickedPanel.getIndex(), frame);
+                        }
                     }
                 }
             });
@@ -324,7 +329,7 @@ public class profileChooser extends JFrame{
 
     }
     private void login(){
-        Login login = new Login(windowSize, clickedPanel.getUser(), this);
+        new Login(windowSize, clickedPanel.getUser(), this);
     }
     private void gameMenu(){
         new GameMenu();
@@ -335,6 +340,9 @@ public class profileChooser extends JFrame{
     }
     public static void newLauncherStatic(){
         new Launcher();
+    }
+    public static void setAnotherGUIOpened(boolean opened){
+        anotherGUIOpened = opened;
     }
 
 }

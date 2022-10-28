@@ -4,10 +4,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CardStack {
-    private ArrayList<Card> cards = new ArrayList<>();
-    private int stackX=0;
-    private int stackY=0;
-    private int overlap=0;
+    private final ArrayList<Card> cards = new ArrayList<>();
+    private final int stackX;
+    private final int stackY;
+    private final int overlap;
 
     CardStack(int stackX, int stackY, int overlap){
         this.stackX = stackX;
@@ -17,9 +17,8 @@ public class CardStack {
 
 
     public void add(Card card){
-        int cardX = stackX;
         int cardY = overlap*cards.size()+stackY;
-        card.setXY(cardX, cardY);
+        card.setXY(stackX, cardY);
         cards.add(card);
     }
     public void addToBeginning(Card card){
@@ -36,8 +35,7 @@ public class CardStack {
             Card card = cards.get(lastIndex);
             card.draw(g);
         }else {
-            for (int i = 0; i<cards.size(); i++){
-                Card card = cards.get(i);
+            for (Card card : cards) {
                 card.draw(g);
             }
         }

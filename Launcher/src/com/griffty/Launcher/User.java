@@ -14,7 +14,6 @@ public class User extends JFrame {
     private int index;
     private final Dimension windowSize;
     public BakersDozenStatistic bakersDozenStatistic;
-    public FramedStatistic framedStatistic;
     public MazeStatistic mazeStatistic;
     public SlidingTilesStatistic slidingTitlesStatistic;
     public WatchYourStepStatistic watchYourStepStatistic;
@@ -41,7 +40,9 @@ public class User extends JFrame {
         newUser(guest);
         windowSize = null;
     }
-    private void createUser(){CreateUser createUser = new CreateUser(windowSize, this, jFrame);}
+    private void createUser(){
+        new CreateUser(windowSize, this, jFrame);
+    }
 
 
     private void newUser(String username){
@@ -53,7 +54,6 @@ public class User extends JFrame {
 
     private void createStatistic(){
        bakersDozenStatistic = new BakersDozenStatistic();
-       framedStatistic = new FramedStatistic();
        mazeStatistic = new MazeStatistic();
        slidingTitlesStatistic = new SlidingTilesStatistic();
        watchYourStepStatistic = new WatchYourStepStatistic();

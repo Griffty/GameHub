@@ -2,18 +2,17 @@ package com.griffty.Launcher;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Login extends JFrame {
-    private User user;
+    private final User user;
     private final Dimension windowSize;
     private final Font TopFont = new Font("comic sans ms", Font.BOLD, 30);
     private final Font buttonFont = new Font("comic sans ms", Font.BOLD, 20);
     private final Font mainTextFont = new Font(Font.DIALOG, Font.BOLD, 20);
-    private JFrame profileChooser;
-    public Login(Dimension windowSize, User user, JFrame profileChooser) {
-        this.profileChooser = profileChooser;
+    private final JFrame PROFILECHOOSER;
+    public Login(Dimension windowSize, User user, JFrame PROFILECHOOSER) {
+        profileChooser.setAnotherGUIOpened(true);
+        this.PROFILECHOOSER = PROFILECHOOSER;
         this.user = user;
         this.windowSize = windowSize;
         initGUI();
@@ -56,21 +55,19 @@ public class Login extends JFrame {
         passTextField.setMaximumSize(new Dimension(width/3, height/10));
         passPanel.add(passTextField);
         JButton continueButton = new JButton("Continue");
-        continueButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Component parent = (Component) e.getSource();
-                System.out.println(user.getPass());
-                if (passTextField.getText().equals(user.getPass())){
-                    new GameMenu();
-                    profileChooser.dispose();
-                    dispose();
-                }else {
-                    String message = "Wrong pass, try again";
-                    JOptionPane.showMessageDialog(parent, message);
-                }
-
+        continueButton.addActionListener(e -> {
+            Component parent = (Component) e.getSource();
+            System.out.println(user.getPass());
+            if (passTextField.getText().equals(user.getPass())){
+                new GameMenu();
+                profileChooser.setAnotherGUIOpened(false);
+                PROFILECHOOSER.dispose();
+                dispose();
+            }else {
+                String message = "Wrong pass, try again";
+                JOptionPane.showMessageDialog(parent, message);
             }
+
         });
         continueButton.setFont(buttonFont);
         continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);

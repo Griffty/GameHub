@@ -9,7 +9,6 @@ public class Launcher extends JFrame {
     private Font startBtnFont = new Font(Font.SANS_SERIF, Font.BOLD, 80);
     private Font settingsBtnFont = new Font(Font.SANS_SERIF, Font.BOLD, 64);
     private Font MainLabelFont = new Font("comic sans ms", Font.BOLD, 192);
-    private FontMetrics fontMetrics;
     public static Dimension windowSize;
 
     private final JPanel centralPanel = new JPanel();
@@ -17,8 +16,6 @@ public class Launcher extends JFrame {
     private final JButton startButton = new JButton("Start playing");
     private final JButton settingsButton = new JButton();
     Launcher(){
-        fontMetrics = getFontMetrics(MainLabelFont);
-        System.out.println(fontMetrics.stringWidth("Game Hub"));
         initGUI();
         setTitle("Ultimate Game Hub");
         setResizable(false);
@@ -52,17 +49,11 @@ public class Launcher extends JFrame {
         settingsButton.setText("Settings");
         settingsButton.setFont(settingsBtnFont);
         settingsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        settingsButton.addActionListener(e -> {
-            Settings settings = new Settings();
-        });
         centralPanel.add(settingsButton);
         centralPanel.add(Box.createVerticalGlue());
 
 
         windowSize = new Dimension(centralPanel.getWidth(), centralPanel.getHeight());
-
-
-;
         startBtnFont = new Font(Font.SANS_SERIF, Font.BOLD, 510/18);
         startButton.setFont(startBtnFont);
         MainLabelFont = new Font("comic sans ms", Font.BOLD, 510/6);

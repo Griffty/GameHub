@@ -27,29 +27,27 @@ public class WordBuilder extends JFrame {
 
     private static final String FILENAME = "highScores.txt";
 
-    private int windowX = -1, windowY = -1, windowW = -1, windowH = -1;
-    private int windowState = JFrame.NORMAL;
     private static final Color TAN = new Color(222, 191, 168);
     private static final Font SMALLFONT = new Font(Font.DIALOG, Font.BOLD, 12);
     private static final Font BIGFONT = new Font(Font.DIALOG, Font.BOLD, 36);
 
-    private LetterPanel[][] board = new LetterPanel[ROWS][COLS];
-    private LetterPanel[] played = new LetterPanel[MAX];
+    private final LetterPanel[][] board = new LetterPanel[ROWS][COLS];
+    private final LetterPanel[] played = new LetterPanel[MAX];
     private int points = 0, score = 0;
     private String word = "";
-    private Dictionary dictionary = new Dictionary();
-    private JPanel mainPanel = new JPanel();
-    private JPanel boardPanel = new JPanel();
-    private JPanel scorePanel = new JPanel();
-    private JPanel playPanel = new JPanel();
-    private JLabel pointsTitleLabel = new JLabel("Points: ");
-    private JLabel scoreTitleLabel = new JLabel("Score: ");
-    private JLabel pointsLabel = new JLabel("0");
-    private JLabel scoreLabel = new JLabel("0");
+    private final Dictionary dictionary = new Dictionary();
+    private final JPanel mainPanel = new JPanel();
+    private final JPanel boardPanel = new JPanel();
+    private final JPanel scorePanel = new JPanel();
+    private final JPanel playPanel = new JPanel();
+    private final JLabel pointsTitleLabel = new JLabel("Points: ");
+    private final JLabel scoreTitleLabel = new JLabel("Score: ");
+    private final JLabel pointsLabel = new JLabel("0");
+    private final JLabel scoreLabel = new JLabel("0");
 
-    private JButton acceptButton = new JButton("Accept");
-    private JButton undoButton = new JButton("Undo");
-    private JButton clearButton = new JButton("Clear");
+    private final JButton acceptButton = new JButton("Accept");
+    private final JButton undoButton = new JButton("Undo");
+    private final JButton clearButton = new JButton("Clear");
     private User user;
 
     public WordBuilder(){
@@ -61,15 +59,10 @@ public class WordBuilder extends JFrame {
         setTitle("World Builder");
         setVisible(true);
         setResizable(true);
-        if (windowX < 0){
-            pack();
-        }else {
-            setLocation(windowX, windowY);
-            setSize(windowW, windowH);
-        }
+        pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setExtendedState(windowState);
+        setExtendedState(JFrame.NORMAL);
 
     }
     private void initGUI(){
@@ -139,37 +132,19 @@ public class WordBuilder extends JFrame {
         buttonPanel.setBackground(BLACK);
         mainPanel.add(buttonPanel);
         acceptButton.setEnabled(false);
-        acceptButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                user.wordBuilderStatistic.addWords(word);
-                accept();
-            }
+        acceptButton.addActionListener(e -> {
+            user.wordBuilderStatistic.addWords(word);
+            accept();
         });
         buttonPanel.add(acceptButton);
         undoButton.setEnabled(false);
-        undoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                undo();
-            }
-        });
+        undoButton.addActionListener(e -> undo());
         buttonPanel.add(undoButton);
         clearButton.setEnabled(false);
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clear();
-            }
-        });
+        clearButton.addActionListener(e -> clear());
         buttonPanel.add(clearButton);
         JButton endButton = new JButton("End Game");
-        endButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                endGame();
-            }
-        });
+        endButton.addActionListener(e -> endGame());
         buttonPanel.add(endButton);
         // listeners
         addComponentListener(new ComponentAdapter() {
@@ -254,7 +229,7 @@ public class WordBuilder extends JFrame {
         ArrayList<String> records = new ArrayList<>();
         int index = 0;
         try {
-            BufferedReader in = new BufferedReader(new FileReader(new File(FILENAME)));
+            BufferedReader in = new BufferedReader(new FileReader(FILENAME));
             String s = in.readLine();
             while (!(s==null)){
                 records.add(s);
@@ -274,9 +249,9 @@ public class WordBuilder extends JFrame {
             String message = "Some error occurred, new height score list will be created";
             JOptionPane.showMessageDialog(this, message);
         }
-        String message = "";
+        StringBuilder message = new StringBuilder();
         if (index<10){
-            message = "Hooray! Your score is one of the top 10.";
+            message = new StringBuilder("Hooray! Your score is one of the top 10.");
             DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             Date date = new Date();
             String newRecord = score + " " + dateFormat.format(date);
@@ -287,13 +262,13 @@ public class WordBuilder extends JFrame {
             saveRecord(records);
 
         }
-        message += "TOP 10 HIGH SCORES: \n ";
+        message.append("TOP 10 HIGH SCORES: \n ");
         for (String record : records) {
-            message += record + "\n";
+            message.append(record).append("\n");
         }
-        message += "Do you want to play again?";
-        int choise = JOptionPane.showConfirmDialog(this, message, "Play again?",  JOptionPane.YES_NO_OPTION);
-        if (choise == YES_OPTION){
+        message.append("Do you want to play again?");
+        int choice = JOptionPane.showConfirmDialog(this, message.toString(), "Play again?",  JOptionPane.YES_NO_OPTION);
+        if (choice == YES_OPTION){
             newGame();
         }else{
             System.exit(999);
@@ -317,7 +292,7 @@ public class WordBuilder extends JFrame {
     }
     private void saveRecord(ArrayList<String> records){
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(new File(FILENAME)));
+            BufferedWriter out = new BufferedWriter(new FileWriter(FILENAME));
             for (String record : records) {
                 out.write(record);
                 out.newLine();

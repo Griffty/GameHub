@@ -7,8 +7,6 @@ import griffty.TitleLabel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class SlidingTiles extends JFrame {
 
     private TileButton[][] tile = new TileButton[gridSize][gridSize];
 
-    private JPanel centerPanel = new JPanel();
+    private final JPanel centerPanel = new JPanel();
     private User user;
     public SlidingTiles() {
         user = profileChooser.user;
@@ -45,6 +43,7 @@ public class SlidingTiles extends JFrame {
         }
         try{
             InputStream input = getClass().getResourceAsStream(FILENAME);
+            assert input != null;
             image = ImageIO.read(input);
             TileButton.setTileSizeAndMaxTiles(tileSize, gridSize*gridSize);
             initGUI();
@@ -69,36 +68,16 @@ public class SlidingTiles extends JFrame {
         menuBar.add(sizeMenu);
         JMenuItem openMenuItem = new JMenuItem("Open");
         JMenuItem size3MenuItem = new JMenuItem("3x3");
-        size3MenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setGridSize(3);
-            }
-        });
+        size3MenuItem.addActionListener(e -> setGridSize(3));
         JMenuItem size4MenuItem = new JMenuItem("4x4");
-        size4MenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setGridSize(4);
-            }
-        });
+        size4MenuItem.addActionListener(e -> setGridSize(4));
         JMenuItem size5MenuItem = new JMenuItem("5x5");
-        size5MenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setGridSize(5);
-            }
-        });
+        size5MenuItem.addActionListener(e -> setGridSize(5));
         sizeMenu.add(size3MenuItem);
         sizeMenu.add(size4MenuItem);
         sizeMenu.add(size5MenuItem);
         fileMenu.add(openMenuItem);
-        openMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                open();
-            }
-        });
+        openMenuItem.addActionListener(e -> open());
         //title
         TitleLabel titlelabel = new TitleLabel("Sliding Titles",this);
         add(titlelabel, PAGE_START);
@@ -109,12 +88,7 @@ public class SlidingTiles extends JFrame {
         add(buttonPanel, PAGE_END);
         buttonPanel.setBackground(black);
         JButton scrambleButton = new JButton("Scramble");
-        scrambleButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newGame();
-            }
-        });
+        scrambleButton.addActionListener(e -> newGame());
         buttonPanel.add(scrambleButton);
     }
     private void setGridSize(int size){
@@ -164,12 +138,9 @@ public class SlidingTiles extends JFrame {
                 BufferedImage subimage = image.getSubimage(x, y, tileSize, tileSize);
                 ImageIcon image = new ImageIcon(subimage);
                 tile[row][col] = new TileButton(image, imageId, row, col);
-                tile[row][col].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        TileButton button = (TileButton) e.getSource();
-                        clickedTile(button);
-                    }
+                tile[row][col].addActionListener(e -> {
+                    TileButton button = (TileButton) e.getSource();
+                    clickedTile(button);
                 });
                 centerPanel.add(tile[row][col]);
                 imageId++;
@@ -195,7 +166,7 @@ public class SlidingTiles extends JFrame {
         if (imagesInOrder()){
             user.slidingTitlesStatistic.addWin();
             tile[gridSize-1][gridSize-1].showImage();
-        };
+        }
     }
     private void scramble(){
         user.slidingTitlesStatistic.addAttempt();

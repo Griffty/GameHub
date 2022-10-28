@@ -28,15 +28,15 @@ public class TablePanel extends JPanel {
     private static final int BOARDY = CARDHEIGHT+MARGIN*2;
     private static final int OVERLAP = (int) (CARDHEIGHT*.65);
     private Deck deck;
-    private Deck savedDeck = new Deck();
-    private CardStack[] foundation = new CardStack[4];
-    private CardStack[] column = new CardStack[13];
+    private final Deck savedDeck = new Deck();
+    private final CardStack[] foundation = new CardStack[4];
+    private final CardStack[] column = new CardStack[13];
 
     private Card movingCard;
     private int mouseX = 0;
     private int mouseY = 0;
     private int fromCol = 0;
-    private User user;
+    private final User user;
 
     TablePanel(User user){
         this.user = user;

@@ -2,13 +2,11 @@ package com.griffty.Launcher;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
 
 public class CreateUser extends JFrame {
-    private User user;
+    private final User user;
     private final Dimension windowSize;
     private final Font TopFont = new Font("comic sans ms", Font.BOLD, 30);
     private final Font buttonFont = new Font("comic sans ms", Font.BOLD, 20);
@@ -16,6 +14,7 @@ public class CreateUser extends JFrame {
     private final JFrame frame;
 
     public CreateUser(Dimension windowSize, User user, JFrame frame) {
+        profileChooser.setAnotherGUIOpened(true);
         this.frame=frame;
         this.user = user;
         this.windowSize = windowSize;
@@ -62,25 +61,23 @@ public class CreateUser extends JFrame {
         passTextField.setMaximumSize(new Dimension(width/3, height/10));
         passPanel.add(passTextField);
         JButton continueButton = new JButton("Register");
-        continueButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Component parent = (Component) e.getSource();
-                boolean valid = true;
-                if (!(usernameTextField.getText().matches("[A-Za-z0-9]+") && !(usernameTextField.getText().length()<3))){
-                    String message = "Username must include at least 3 characters and contain at least one letter";
-                    JOptionPane.showMessageDialog(parent, message);
-                    valid = false;
-                }
-                if (!(passTextField.getText().matches("[A-Za-z0-9]+") && !(passTextField.getText().length()<3))){
-                    valid = false;
-                    String message = "Password must include at least 3 characters and contain at least one letter";
-                    JOptionPane.showMessageDialog(parent, message);
-                }
-                if (valid){
-                    newUser(usernameTextField.getText(), passTextField.getText());
-                    dispose();
-                }
+        continueButton.addActionListener(e -> {
+            Component parent = (Component) e.getSource();
+            boolean valid = true;
+            if (!(usernameTextField.getText().matches("[A-Za-z0-9]+") && !(usernameTextField.getText().length()<3))){
+                String message = "Username must include at least 3 characters and contain at least one letter";
+                JOptionPane.showMessageDialog(parent, message);
+                valid = false;
+            }
+            if (!(passTextField.getText().matches("[A-Za-z0-9]+") && !(passTextField.getText().length()<3))){
+                valid = false;
+                String message = "Password must include at least 3 characters and contain at least one letter";
+                JOptionPane.showMessageDialog(parent, message);
+            }
+            if (valid){
+                newUser(usernameTextField.getText(), passTextField.getText());
+                profileChooser.setAnotherGUIOpened(false);
+                dispose();
             }
         });
         continueButton.setFont(buttonFont);

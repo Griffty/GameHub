@@ -1,23 +1,15 @@
 package com.griffty.Launcher;
 
-import com.griffty.bakersdozen.BakersDozen;
-import com.griffty.mazegenerator.MazeGenerator;
-import com.griffty.slidingtiles.SlidingTiles;
-import com.griffty.watchyourstep.WatchYourStep;
-import com.griffty.wizardyesno.WizardOfYesNo;
-import com.griffty.worldbuilder.WordBuilder;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class StatisticPanel extends JPanel {
-    private String gameName = "";
+    private final String gameName;
     private final int size = 300;
     private final Font gameNameFont = new Font(Font.SANS_SERIF, Font.BOLD, 20);
-    private final Font statisticFont = new Font(Font.SANS_SERIF, Font.BOLD, 16);
     private final FontMetrics gameNameFM = getFontMetrics(gameNameFont);
     private final FontMetrics statisticFM = getFontMetrics(gameNameFont);
-    private User user;
+    private final User user;
 
     StatisticPanel(String gameName) {
         this.gameName = gameName;
@@ -39,7 +31,7 @@ public class StatisticPanel extends JPanel {
         g.fillRoundRect(10, 10, size - 20, size - 20, 10, 10);
         g.setColor(Color.BLACK);
         g.drawString(gameName, (size - nameWidth) / 2, nameHeight + size / 20);
-        int statWidth = statisticFM.stringWidth("attempts");
+        int statWidth;
         switch (gameName) {
             case "Baker's Dozen" -> {
 
@@ -99,18 +91,6 @@ public class StatisticPanel extends JPanel {
                 statWidth = statisticFM.stringWidth(cardsMoved);
                 g.drawString(cardsMoved, (size-statWidth)/2 , size*5/9);
             }
-        }
-
-
-    }
-    public void openFull() {
-        switch (gameName) {
-            case "Baker's Dozen" -> new BakersDozen();
-            case "Word Builder" -> new WordBuilder();
-            case "Maze" -> new MazeGenerator();
-            case "Wizard Yes Or No" -> new WizardOfYesNo();
-            case "Sliding Tiles" -> new SlidingTiles();
-            case "Watch Your Step" -> new WatchYourStep();
         }
     }
 }
