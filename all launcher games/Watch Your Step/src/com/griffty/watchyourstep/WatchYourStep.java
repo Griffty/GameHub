@@ -150,7 +150,4 @@ public class WatchYourStep extends JFrame {
         }
         setHoles();
     }
-    public static void main(String[] args) {
-        EventQueue.invokeLater(WatchYourStep::new);
-    }
 }

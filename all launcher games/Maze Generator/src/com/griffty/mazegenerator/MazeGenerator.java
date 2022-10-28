@@ -273,14 +273,5 @@ public class MazeGenerator extends JFrame {
         }
 
     }
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                String className = UIManager.getSystemLookAndFeelClassName();
-                UIManager.setLookAndFeel(className);
-                new MazeGenerator();
-            } catch (Exception ignored) {}
-        });
-    }
 
 }

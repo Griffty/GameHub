@@ -331,13 +331,5 @@ public class WordBuilder extends JFrame {
         scoreLabel.setFont(bigFont);
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                String className = UIManager.getSystemLookAndFeelClassName();
-                UIManager.setLookAndFeel(className);
-                new WordBuilder();
-            } catch (Exception ignored) {}
-        });
-    }
+
 }

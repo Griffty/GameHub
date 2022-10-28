@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static com.griffty.Launcher.Launcher.DarkTheme;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 
@@ -49,16 +50,19 @@ public class GameMenu extends JFrame {
             });
             centralPanel.add(allGames[i]);
         }
-        System.out.println(user);
+        JPanel bottomPanel = new JPanel();
         if (user!=null) {
-            JPanel bottomPanel = new JPanel();
             mainPanel.add(bottomPanel);
-            JButton statButton = new JButton("Open Statistic");
+            JColoredButton statButton = new JColoredButton("Open Statistic");
             statButton.addActionListener(e -> {
                 new StatisticMenu();
                 dispose();
             });
             bottomPanel.add(statButton);
+        }
+        if (DarkTheme){
+            centralPanel.setBackground(Color.darkGray);
+            bottomPanel.setBackground(Color.darkGray);
         }
     }
 }

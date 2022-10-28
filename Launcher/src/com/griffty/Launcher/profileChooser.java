@@ -10,13 +10,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 
-import static com.griffty.Launcher.Settings.darkTheme;
+import static com.griffty.Launcher.Launcher.DarkTheme;
 import static java.awt.BorderLayout.CENTER;
 public class profileChooser extends JFrame{
     private final Dimension windowSize;
     private Font PlayAsGuestFont;
     private final JPanel mainPanel = new JPanel();
-    private static final JButton[] deleteButton = new JButton[3];
+    private static final JColoredButton[] deleteButton = new JColoredButton[3];
+    private final JColoredButton playAsGuest = new JColoredButton("Play as guest");
     private Icon deleteButtonIcon = new ImageIcon();
     public static User[] users = {null, null, null};
     public static User user = null;
@@ -47,14 +48,13 @@ public class profileChooser extends JFrame{
     }
     static void updateUserData(){
         File folder = new File(DOCUMENTS);
-        if (!folder.mkdir()){System.out.println("Folder already exist");}
+        if (folder.mkdir()){System.out.println("Folder created");}
         File[] listOfFiles = folder.listFiles();
         try {
             assert listOfFiles != null;
             for (File account : listOfFiles) {
                 BufferedReader in = new BufferedReader(new FileReader(account));
-                String version = in.readLine();
-                System.out.println(version);
+                in.readLine();
                 String s;
                 int index;
                 s = in.readLine();
@@ -105,13 +105,7 @@ public class profileChooser extends JFrame{
                 users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":")+2)));
                 in.readLine();
                 in.close();
-                System.out.println(users[index].getName());
-
-                System.out.println(users[index].getPass());
-
-                System.out.println(users[index].getTAG());
                 DATAFILE[index] = account;
-                System.out.println(DATAFILE[index].getName());
 
             }
         } catch (Exception e) {
@@ -121,7 +115,7 @@ public class profileChooser extends JFrame{
 
     }
 
-    profileChooser(Dimension windowSize){
+    public profileChooser(Dimension windowSize){
         this.windowSize = windowSize;
         try {
             String className = UIManager.getSystemLookAndFeelClassName();
@@ -139,7 +133,7 @@ public class profileChooser extends JFrame{
     }
 
     private void initGui(){
-        mainPanel.setBackground(Color.gray);
+
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setPreferredSize(windowSize);
         add(mainPanel);
@@ -158,7 +152,6 @@ public class profileChooser extends JFrame{
             profiles[i] = new Profile(windowSize, i);
             if (users[i]!=null){
                 profiles[i].setUser(users[i]);
-                System.out.println("Users uploaded");
             }
             profiles[i].addMouseListener(new MouseAdapter() {
                 @Override
@@ -166,7 +159,8 @@ public class profileChooser extends JFrame{
                     clickedPanel = (Profile) e.getSource();
                     if (!anotherGUIOpened) {
                         if (clickedPanel.hasUser()){
-                           login();
+                            user = clickedPanel.getUser();
+                            login();
                         }else{
                             users[clickedPanel.getIndex()] = new User(windowSize, clickedPanel.getIndex(), frame);
                         }
@@ -182,7 +176,8 @@ public class profileChooser extends JFrame{
         JPanel deletePanel = new JPanel();
         deletePanel.setLayout(new BoxLayout(deletePanel, BoxLayout.X_AXIS));
         for (int i =0; i<3; i++) {
-            deleteButton[i] = new JButton(deleteButtonIcon);
+            deleteButton[i] = new JColoredButton("");
+            deleteButton[i].setIcon(deleteButtonIcon);
             deleteButton[i].setEnabled(false);
 
             deleteButton[i].addActionListener(e -> deleteUser((JButton) e.getSource()));
@@ -197,24 +192,27 @@ public class profileChooser extends JFrame{
         centralPanel.add(deletePanel);
         centralPanel.add(Box.createVerticalGlue());
 
-        JButton playAsGuest = new JButton("Play as guest");
+
         playAsGuest.setFont(PlayAsGuestFont);
         playAsGuest.setAlignmentX(Component.CENTER_ALIGNMENT);
         playAsGuest.addActionListener(e -> gameMenu());
         centralPanel.add(playAsGuest);
         centralPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        if (darkTheme){
-            mainPanel.setBackground(Color.black);
-            centralPanel.setBackground(Color.black);
-            profilePanel.setBackground(Color.black);
-            deletePanel.setBackground(Color.black);
-            titleLabel.setBackground(Color.black);
-            titleLabel.setForeground(Color.lightGray);
+        if (DarkTheme){
+            centralPanel.setBackground(Color.darkGray);
+            deletePanel.setBackground(Color.darkGray);
+            profilePanel.setBackground(Color.darkGray);
         }
     }
 
     public static void saveData(){
+
             for (User user : users) {
+                if (user!=null) {
+                    if (user.getTAG().equals("-1")) {
+                        user = null;
+                    }
+                }
                 if (user != null) {
                     File datafile = new File(DOCUMENTS + user.getName() + ".txt");
                     int find = 0;
@@ -223,11 +221,7 @@ public class profileChooser extends JFrame{
                             if ((user.getName() + ".txt").equals(DATAFILE[i].getName())) {
                                 datafile = DATAFILE[i];
                                 find = 1;
-                            } else {
-                                System.out.println("new file " + datafile.getPath() + " was created");
                             }
-                        } else {
-                            System.out.println("file wasn't found");
                         }
                     }
                     try {
@@ -284,7 +278,6 @@ public class profileChooser extends JFrame{
                         out.newLine();
                         out.write("Total tiles opened: " + user.watchYourStepStatistic.getTilesOpened());
                         out.close();
-                        System.out.println("Data saved");
                     } catch (IOException e) {
                         String message = "Users data cannot be saved";
                         JOptionPane.showMessageDialog(null, message);

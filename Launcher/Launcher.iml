@@ -8,7 +8,6 @@
     </content>
     <content url="file://$MODULE_DIR$/../all launcher games">
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/Bakers Dozen/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../all launcher games/Framed/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/Maze Generator/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/MyComponents/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/SlidingTitles/src" isTestSource="false" />

@@ -50,13 +50,4 @@ public class Dictionary {
         }
         return found;
     }
-    public static void main(String[] args) {
-        Dictionary dictionary = new Dictionary();
-        String word = "state";
-        if (dictionary.isAWord(word)){
-            System.out.println(word);
-        }else {
-            System.out.println("fail");
-        }
-    }
 }

@@ -5,7 +5,6 @@ import com.griffty.Launcher.profileChooser;
 import griffty.TitleLabel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -40,12 +39,5 @@ public class WizardOfYesNo extends JFrame {
         });
         add(titleLabel, PAGE_START);
         add(centralPanel, CENTER);
-    }
-    public static void main(String[] args) {
-        try {
-            String className = UIManager.getCrossPlatformLookAndFeelClassName() ;
-            UIManager.setLookAndFeel(className);}
-        catch (Exception ignored) {}
-        EventQueue.invokeLater(WizardOfYesNo::new);
     }
 }

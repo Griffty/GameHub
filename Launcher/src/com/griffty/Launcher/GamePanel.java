@@ -13,6 +13,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
+import static com.griffty.Launcher.Launcher.DarkTheme;
+
 class GamePanel extends JPanel {
     private final String gameName;
     private BufferedImage image = null;
@@ -29,7 +31,6 @@ class GamePanel extends JPanel {
             assert input != null;
             image = ImageIO.read(input);
         }catch (Exception e){
-            System.out.println(FILENAME);
             String message = "Icon image cannot be read";
             JOptionPane.showMessageDialog(this, message);
         }
@@ -47,7 +48,11 @@ class GamePanel extends JPanel {
         int nameWidth = gameNameFM.stringWidth(gameName);
         int nameHeight = gameNameFM.getHeight();
         g.setFont(gameNameFont);
-        g.setColor(Color.lightGray);
+        if (DarkTheme){
+            g.setColor(Color.black);
+        }else {
+            g.setColor(Color.lightGray);
+        }
         g.fillRoundRect(10,10,size-20,size-20, 10,10);
         g.drawImage(image, 20, 20, size-40, size-40, this);
         g.setColor(Color.BLACK);

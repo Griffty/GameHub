@@ -234,13 +234,5 @@ public class SlidingTiles extends JFrame {
 
 
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                String className = UIManager.getSystemLookAndFeelClassName();
-                UIManager.setLookAndFeel(className);
-                new SlidingTiles();
-            } catch (Exception ignored) {}
-        });
-    }
+
 }

@@ -5,7 +5,6 @@ import com.griffty.Launcher.profileChooser;
 import griffty.TitleLabel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.Serial;
 
 import static java.awt.BorderLayout.*;
@@ -55,15 +54,5 @@ public class BakersDozen extends JFrame {
 
         });
         buttonPanel.add(replayGameButton);
-    }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                String className = UIManager.getSystemLookAndFeelClassName();
-                UIManager.setLookAndFeel(className);
-                new BakersDozen();
-            } catch (Exception ignored) {}
-        });
     }
 }

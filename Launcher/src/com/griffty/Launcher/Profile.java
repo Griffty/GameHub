@@ -3,6 +3,7 @@ package com.griffty.Launcher;
 import javax.swing.*;
 import java.awt.*;
 
+import static com.griffty.Launcher.Launcher.DarkTheme;
 import static java.awt.Color.*;
 
 public class Profile extends JPanel {
@@ -36,15 +37,27 @@ public class Profile extends JPanel {
     protected void paintComponent(Graphics g) {
         int boxSize = size+23;
         if (user==null){
-            g.setColor(lightGray);
-            g.fillRoundRect(0, 0, boxSize, boxSize, 30, 30);
-            g.setColor(black);
-            g.drawRoundRect(0, 0, boxSize - 1, boxSize - 1, 30, 30);
-            g.setColor(gray);
+            if (DarkTheme){
+                g.setColor(darkGray);
+                g.fillRoundRect(0, 0, boxSize, boxSize, 30, 30);
+                g.setColor(black);
+                g.drawRoundRect(0, 0, boxSize - 1, boxSize - 1, 30, 30);
+                g.setColor(black);
+            }else {
+                g.setColor(lightGray);
+                g.fillRoundRect(0, 0, boxSize, boxSize, 30, 30);
+                g.setColor(black);
+                g.drawRoundRect(0, 0, boxSize - 1, boxSize - 1, 30, 30);
+                g.setColor(gray);
+            }
             g.fillRoundRect(boxSize/2 - boxSize/32, boxSize/4, boxSize/16, boxSize - boxSize/2, 5, 10);
             g.fillRoundRect(boxSize/4, boxSize/2 - boxSize/32, boxSize - boxSize/2, boxSize/16,5, 10);
         }else {
-            g.setColor(lightGray);
+            if (DarkTheme) {
+                g.setColor(darkGray);
+            }else {
+                g.setColor(lightGray);
+            }
             g.fillRoundRect(0, 0, boxSize, boxSize, 30, 30);
             g.setColor(black);
             g.drawRoundRect(0, 0, boxSize - 1, boxSize - 1, 30, 30);

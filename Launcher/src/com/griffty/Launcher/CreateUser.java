@@ -1,8 +1,14 @@
 package com.griffty.Launcher;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Random;
+
+import static com.griffty.Launcher.Launcher.DarkTheme;
+import static com.griffty.Launcher.profileChooser.users;
 
 
 public class CreateUser extends JFrame {
@@ -60,7 +66,7 @@ public class CreateUser extends JFrame {
         JTextField passTextField = new JTextField();
         passTextField.setMaximumSize(new Dimension(width/3, height/10));
         passPanel.add(passTextField);
-        JButton continueButton = new JButton("Register");
+        JColoredButton continueButton = new JColoredButton("Register");
         continueButton.addActionListener(e -> {
             Component parent = (Component) e.getSource();
             boolean valid = true;
@@ -85,6 +91,25 @@ public class CreateUser extends JFrame {
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(continueButton);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        if (DarkTheme){
+            mainPanel.setBackground(Color.darkGray);
+            passPanel.setBackground(Color.darkGray);
+            usernamePanel.setBackground(Color.darkGray);
+            usernameTextField.setBackground(Color.gray);
+            usernameTextField.setBorder(new LineBorder(Color.black));
+            passTextField.setBackground(Color.gray);
+            passTextField.setBorder(new LineBorder(Color.black));
+        }
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                profileChooser.setAnotherGUIOpened(false);
+                users[user.getIndex()] = null;
+                super.windowClosed(e);
+            }
+        });
 
     }
     private void newUser(String username, String password){
