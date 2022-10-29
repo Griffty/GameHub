@@ -5,6 +5,7 @@ import com.griffty.Launcher.profileChooser;
 import griffty.TitleLabel;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -24,7 +25,7 @@ public class WordBuilder extends JFrame {
     private static final long serialVersionUID = 1L;
 
     private static final int ROWS = 8, COLS = 12, MAX = 15;
-
+    private static final String DOCUMENTS = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+ "\\GameHub\\";
     private static final String FILENAME = "highScores.txt";
 
     private static final Color TAN = new Color(222, 191, 168);
@@ -229,7 +230,7 @@ public class WordBuilder extends JFrame {
         ArrayList<String> records = new ArrayList<>();
         int index = 0;
         try {
-            BufferedReader in = new BufferedReader(new FileReader(FILENAME));
+            BufferedReader in = new BufferedReader(new FileReader(DOCUMENTS+FILENAME));
             String s = in.readLine();
             while (!(s==null)){
                 records.add(s);
@@ -249,25 +250,18 @@ public class WordBuilder extends JFrame {
             String message = "Some error occurred, new height score list will be created";
             JOptionPane.showMessageDialog(this, message);
         }
-        StringBuilder message = new StringBuilder();
+
         if (index<10){
-            message = new StringBuilder("Hooray! Your score is one of the top 10.");
             DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             Date date = new Date();
-            String newRecord = score + " " + dateFormat.format(date);
+            String newRecord = score + " " + dateFormat.format(date) + ":" + user.getName();
             records.add(newRecord);
             if (records.size()>10){
                 records.remove(9);
             }
             saveRecord(records);
-
         }
-        message.append("TOP 10 HIGH SCORES: \n ");
-        for (String record : records) {
-            message.append(record).append("\n");
-        }
-        message.append("Do you want to play again?");
-        int choice = JOptionPane.showConfirmDialog(this, message.toString(), "Play again?",  JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Do you want to play again?", "Play again?",  JOptionPane.YES_NO_OPTION);
         if (choice == YES_OPTION){
             newGame();
         }else{
@@ -292,7 +286,7 @@ public class WordBuilder extends JFrame {
     }
     private void saveRecord(ArrayList<String> records){
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(FILENAME));
+            BufferedWriter out = new BufferedWriter(new FileWriter(DOCUMENTS+FILENAME));
             for (String record : records) {
                 out.write(record);
                 out.newLine();
