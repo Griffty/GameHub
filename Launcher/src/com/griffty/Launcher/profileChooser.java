@@ -12,7 +12,6 @@ import java.io.*;
 
 import static com.griffty.Launcher.Launcher.DarkTheme;
 import static java.awt.BorderLayout.CENTER;
-
 public class profileChooser extends JFrame{
     private final Dimension windowSize;
     private Font PlayAsGuestFont;
@@ -51,69 +50,69 @@ public class profileChooser extends JFrame{
         File folder = new File(DOCUMENTS);
         if (folder.mkdir()){System.out.println("Folder created");}
         File[] listOfFiles = folder.listFiles();
+        try {
             assert listOfFiles != null;
             for (File account : listOfFiles) {
-                if (!account.getName().equals("highScores.txt")) {
-                    try {
-                    BufferedReader in = new BufferedReader(new FileReader(account));
-                    in.readLine();
-                    String s;
-                    int index;
-                    s = in.readLine();
-                    index = Integer.parseInt(s.substring(s.indexOf(":") + 2));
+                BufferedReader in = new BufferedReader(new FileReader(account));
+                in.readLine();
+                String s;
+                int index;
+                s = in.readLine();
+                index = Integer.parseInt(s.substring(s.indexOf(":")+2));
 
-                    users[index] = new User(index);
-                    s = in.readLine();
-                    users[index].setName(s.substring(s.indexOf(":") + 2));
-                    s = in.readLine();
-                    users[index].setTAG(s.substring(s.indexOf(":") + 2));
-                    s = in.readLine();
-                    users[index].setPass(s.substring(s.indexOf(":") + 2));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].bakersDozenStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].bakersDozenStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].bakersDozenStatistic.setCardsMoved(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].wordBuilderStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].wordBuilderStatistic.setLettersUsed(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].mazeStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].mazeStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].mazeStatistic.setCellsPassed(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].wizardYesOrNoStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].slidingTitlesStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].slidingTitlesStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].slidingTitlesStatistic.setTimesClicked(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    in.readLine();
-                    s = in.readLine();
-                    users[index].watchYourStepStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].watchYourStepStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    s = in.readLine();
-                    users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":") + 2)));
-                    in.readLine();
-                    in.close();
-                    DATAFILE[index] = account;
-                }catch (Exception e){
-                    String message = "Data files cannot be read";
-                    JOptionPane.showMessageDialog(null, message);
-                }
+                users[index] = new User(index);
+                s = in.readLine();
+                users[index].setName(s.substring(s.indexOf(":")+2));
+                s = in.readLine();
+                users[index].setTAG(s.substring(s.indexOf(":")+2));
+                s = in.readLine();
+                users[index].setPass(s.substring(s.indexOf(":")+2));
+                in.readLine();
+                s = in.readLine();
+                users[index].bakersDozenStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].bakersDozenStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].bakersDozenStatistic.setCardsMoved(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].wordBuilderStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].wordBuilderStatistic.setLettersUsed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].mazeStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].mazeStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].mazeStatistic.setCellsPassed(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].wizardYesOrNoStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].slidingTitlesStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].slidingTitlesStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].slidingTitlesStatistic.setTimesClicked(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                s = in.readLine();
+                users[index].watchYourStepStatistic.setAttempts(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].watchYourStepStatistic.setWins(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                s = in.readLine();
+                users[index].watchYourStepStatistic.setTilesOpened(Integer.parseInt(s.substring(s.indexOf(":")+2)));
+                in.readLine();
+                in.close();
+                DATAFILE[index] = account;
+
             }
+        } catch (Exception e) {
+            String message = "Data files cannot be read";
+            JOptionPane.showMessageDialog(null, message);
         }
+
     }
 
     public profileChooser(Dimension windowSize){
@@ -142,7 +141,7 @@ public class profileChooser extends JFrame{
         centralPanel.setLayout(new BoxLayout(centralPanel, BoxLayout.Y_AXIS));
         mainPanel.add(centralPanel, CENTER);
 
-        TitleLabel titleLabel = new TitleLabel("Choose your profile:", this);
+        TitleLabel titleLabel = new TitleLabel("Choose your profile: ", this);
         centralPanel.add(titleLabel);
         centralPanel.add(Box.createVerticalGlue());
         JPanel profilePanel = new JPanel();

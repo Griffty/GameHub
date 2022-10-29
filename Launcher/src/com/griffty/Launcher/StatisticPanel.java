@@ -2,7 +2,6 @@ package com.griffty.Launcher;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class StatisticPanel extends JPanel {
     private final String gameName;
@@ -47,28 +46,12 @@ public class StatisticPanel extends JPanel {
                 g.drawString(cardsMoved, (size-statWidth)/2 , size*5/9);
             }
             case "Word Builder" -> {
-                Font statisticFont = new Font(Font.SANS_SERIF, Font.BOLD, 15);
                 String attempts = "Total uses: " + user.wordBuilderStatistic.getAttempts();
                 statWidth = statisticFM.stringWidth(attempts);
                 g.drawString(attempts, (size-statWidth)/2 , size*3/9);
                 String cardsMoved = "Total letters used: " + user.wordBuilderStatistic.getLettersUsed();
                 statWidth = statisticFM.stringWidth(cardsMoved);
                 g.drawString(cardsMoved, (size-statWidth)/2 , size*4/9);
-                setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-                add(Box.createVerticalGlue());
-                JColoredButton topTenButton = new JColoredButton("Show top ten scores");
-                topTenButton.setAlignmentX(CENTER_ALIGNMENT);
-                topTenButton.setFont(statisticFont);
-                topTenButton.addActionListener(e -> {
-                    StringBuilder message = new StringBuilder();
-                    ArrayList<String> records = user.wordBuilderStatistic.getTopTen();
-                    for (String record:records){
-                        message.append(record.substring(record.indexOf(":")+1)).append(": ").append(record, 0, record.indexOf(" ")).append(record, record.indexOf(" "), record.indexOf(":")).append("\n");
-                    }
-                    JOptionPane.showMessageDialog(null, message);
-                });
-                add(topTenButton);
-                add(Box.createRigidArea(new Dimension(0, 15)));
             }
             case "Maze" -> {
                 String attempts = "Total attempts: " + user.mazeStatistic.getAttempts();

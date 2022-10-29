@@ -18,7 +18,7 @@ import static com.griffty.Launcher.Launcher.DarkTheme;
 class GamePanel extends JPanel {
     private final String gameName;
     private BufferedImage image = null;
-    private final int size = 295;
+    private final int size = 300;
     private final Font gameNameFont = new Font(Font.SANS_SERIF, Font.BOLD, 20);
     private final FontMetrics gameNameFM;
 
@@ -53,10 +53,10 @@ class GamePanel extends JPanel {
         }else {
             g.setColor(Color.lightGray);
         }
-        g.fillRoundRect(0,0,size-2,size-2, 10,10);
-        g.drawImage(image, 3, 3, size-8, size-8, this);
+        g.fillRoundRect(10,10,size-20,size-20, 10,10);
+        g.drawImage(image, 20, 20, size-40, size-40, this);
         g.setColor(Color.BLACK);
-        g.drawString(gameName, (size-nameWidth)/2, size-nameHeight/2);
+        g.drawString(gameName, (size-nameWidth)/2, size-nameHeight);
     }
 
     public void startGame(){

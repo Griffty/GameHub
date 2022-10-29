@@ -6,13 +6,12 @@ import java.awt.*;
 import static java.awt.BorderLayout.CENTER;
 
 public class Launcher extends JFrame {
-    public static Dimension windowSize = new Dimension(938,510);
+    public static Dimension windowSize;
     private final JPanel centralPanel = new JPanel();
     private final JLabel gameName = new JLabel("Game Hub");
     private final JColoredButton startButton = new JColoredButton("Start playing");
     private final JColoredButton darkTheme = new JColoredButton("Dark theme");
     public static boolean DarkTheme = false;
-    private Color textColor = new Color(200, 200, 200);
 
     Launcher(){
         initGUI();
@@ -27,7 +26,7 @@ public class Launcher extends JFrame {
     private void initGUI(){
 
         centralPanel.setLayout(new BoxLayout(centralPanel, BoxLayout.Y_AXIS));
-        centralPanel.setPreferredSize(new Dimension(600,510));
+        centralPanel.setPreferredSize(new Dimension(938,510));
         centralPanel.add(Box.createVerticalGlue());
         add(centralPanel);
 
@@ -36,6 +35,7 @@ public class Launcher extends JFrame {
         centralPanel.add(Box.createVerticalGlue());
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startButton.addActionListener(e -> {
+            windowSize = new Dimension(centralPanel.getWidth(), centralPanel.getHeight());
             new profileChooser(windowSize);
             dispose();
         });
@@ -48,6 +48,7 @@ public class Launcher extends JFrame {
         centralPanel.add(Box.createVerticalGlue());
 
 
+        windowSize = new Dimension(centralPanel.getWidth(), centralPanel.getHeight());
         Font startBtnFont = new Font(Font.SANS_SERIF, Font.BOLD, 510 / 18);
         startButton.setFont(startBtnFont);
         Font mainLabelFont = new Font("comic sans ms", Font.BOLD, 510 / 6);
@@ -55,30 +56,21 @@ public class Launcher extends JFrame {
         Font settingsBtnFont = new Font(Font.SANS_SERIF, Font.BOLD, 510 / 24);
         darkTheme.setFont(settingsBtnFont);
         if (DarkTheme){
-            centralPanel.setBackground(Color.black);
-            gameName.setForeground(textColor);
-            startButton.setForeground(textColor);
-            darkTheme.setForeground(textColor);
-            darkTheme.setText("Light theme");
+            centralPanel.setBackground(Color.darkGray);
         }
     }
     private void setDarkTheme(){
         Color mainColor;
         String text;
         if (!DarkTheme){
-            textColor = new Color(200, 200, 200);
-            mainColor = Color.black;
+            mainColor = Color.darkGray;
             DarkTheme = true;
             text = "Light theme";
         }else{
-            textColor = new Color(30, 30, 30);
             DarkTheme = false;
             mainColor = null;
             text = "Dark theme";
         }
-        gameName.setForeground(textColor);
-        startButton.setForeground(textColor);
-        darkTheme.setForeground(textColor);
         darkTheme.setText(text);
         centralPanel.setBackground(mainColor);
         repaint();
@@ -92,4 +84,6 @@ public class Launcher extends JFrame {
             } catch (Exception ignored) {}
         });
     }
+
+
 }

@@ -14,7 +14,6 @@ public class GameMenu extends JFrame {
     private final JPanel mainPanel = new JPanel();
     private final GamePanel[] allGames = {null, null, null, null, null, null};
     public static final String[] allGamesNames = {"Baker's Dozen", "Word Builder", "Maze", "Wizard Yes Or No", "Sliding Tiles", "Watch Your Step"};
-    private final Font statisticFont = new Font(Font.SANS_SERIF, Font.BOLD, 15);
     private final User user = profileChooser.user;
     GameMenu(){
         try {
@@ -35,7 +34,7 @@ public class GameMenu extends JFrame {
         TitleLabel titleLabel = new TitleLabel("Choose what do you want to play:",this);
         mainPanel.add(titleLabel, PAGE_START);
         JPanel centralPanel = new JPanel();
-        centralPanel.setLayout(new GridLayout(2,3, 10, 10));
+        centralPanel.setLayout(new GridLayout(0,3));
         centralPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(centralPanel, CENTER);
 
@@ -55,7 +54,6 @@ public class GameMenu extends JFrame {
         if (user!=null) {
             mainPanel.add(bottomPanel);
             JColoredButton statButton = new JColoredButton("Open Statistic");
-            statButton.setFont(statisticFont);
             statButton.addActionListener(e -> {
                 new StatisticMenu();
                 dispose();
