@@ -5,8 +5,11 @@ import com.griffty.Launcher.profileChooser;
 import griffty.TitleLabel;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serial;
 
+import static com.griffty.Launcher.profileChooser.saveData;
 import static java.awt.BorderLayout.*;
 import static java.awt.Color.black;
 
@@ -54,5 +57,11 @@ public class BakersDozen extends JFrame {
 
         });
         buttonPanel.add(replayGameButton);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveData();
+            }
+        });
     }
 }

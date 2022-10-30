@@ -6,10 +6,13 @@ import griffty.TitleLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.Random;
 
 import static com.griffty.Launcher.profileChooser.gameMenuStatic;
+import static com.griffty.Launcher.profileChooser.saveData;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 import static java.awt.Color.black;
@@ -58,7 +61,14 @@ public class WatchYourStep extends JFrame {
                 centerPanel.add(terrain[row][col]);
             }
         }
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveData();
+            }
+        });
     }
+
     private void clickTerrain(int row, int col) {
         user.watchYourStepStatistic.addTilesOpened();
         if (terrain[row][col].hasHole()) {

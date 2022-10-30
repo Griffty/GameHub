@@ -26,7 +26,7 @@ public class TitleLabel extends JPanel {
 
     public TitleLabel(String title, JFrame frame) {
 
-        String profileChooserHint = "Here is 3 empty profiles, you can create new one by clicking on big plus button.\nAfter you sign up, your profile will be saved and you can sign in anytime.\nOnce profile was created you can always delete it by clicking delete button under profile.\nAlso, if you don't want to use profile, you can play as a guest, but then statistic will be disabled!";
+        String profileChooserHint = "Here are 3 empty profiles, you can create new one by clicking on big plus button.\nAfter you sign up, your profile will be saved and you can sign in anytime.\nOnce profile was created you can always delete it by clicking delete button under profile.\nAlso, if you don't want to use profile, you can play as a guest, but then statistic will be disabled!";
         String gameMenuHint = "Here you can choose what game you want to play, or if you have account check your statistic.";
         String BakersDozenHint = "Baker's Dozen is the game where you should make 4 card columns that starts with ace and end with king.\nBesides putting card only into 4 columns, you can also put cards one on top of the other if your card rank is lower.";
         String WordBuilderHint = "Word Builder is a game where you build a word from the letters in the top column.\nTotal score is the sum of all values multiplied by the number of letters.\nAlso, the program will only accept real English words";

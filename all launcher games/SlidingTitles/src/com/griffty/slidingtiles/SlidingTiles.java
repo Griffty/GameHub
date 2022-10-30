@@ -7,6 +7,8 @@ import griffty.TitleLabel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import java.io.Serial;
 import java.util.Random;
 
+import static com.griffty.Launcher.profileChooser.saveData;
 import static java.awt.BorderLayout.*;
 import static java.awt.Color.black;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
@@ -59,6 +62,8 @@ public class SlidingTiles extends JFrame {
     }
     private void initGUI(){
         setBackground(black);
+        TitleLabel titlelabel = new TitleLabel("Sliding Titles",this);
+        add(titlelabel, PAGE_START);
         // menu bar
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -79,8 +84,7 @@ public class SlidingTiles extends JFrame {
         fileMenu.add(openMenuItem);
         openMenuItem.addActionListener(e -> open());
         //title
-        TitleLabel titlelabel = new TitleLabel("Sliding Titles",this);
-        add(titlelabel, PAGE_START);
+
 
         divideImage();
 
@@ -90,6 +94,12 @@ public class SlidingTiles extends JFrame {
         JButton scrambleButton = new JButton("Scramble");
         scrambleButton.addActionListener(e -> newGame());
         buttonPanel.add(scrambleButton);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveData();
+            }
+        });
     }
     private void setGridSize(int size){
         gridSize = size;

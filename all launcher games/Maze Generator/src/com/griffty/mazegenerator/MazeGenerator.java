@@ -9,12 +9,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.griffty.Launcher.profileChooser.saveData;
 import static java.awt.BorderLayout.*;
 import static java.awt.Color.black;
 import static java.awt.event.KeyEvent.*;
@@ -117,6 +120,13 @@ public class MazeGenerator extends JFrame {
             newGame.setFocusable(false);
             newGame.addActionListener(e -> newMaze());
             buttonpanel.add(newGame);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveData();
+            }
+        });
     }
     private void setMazeSize(int size){
         rows = size;

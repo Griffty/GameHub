@@ -7,7 +7,10 @@ import griffty.TitleLabel;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+import static com.griffty.Launcher.profileChooser.saveData;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 
@@ -39,5 +42,11 @@ public class WizardOfYesNo extends JFrame {
         });
         add(titleLabel, PAGE_START);
         add(centralPanel, CENTER);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveData();
+            }
+        });
     }
 }

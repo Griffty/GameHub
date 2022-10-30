@@ -1,5 +1,4 @@
 package com.griffty.Launcher.Statisctic;
-
 import com.griffty.Launcher.Statistic;
 
 import javax.swing.*;

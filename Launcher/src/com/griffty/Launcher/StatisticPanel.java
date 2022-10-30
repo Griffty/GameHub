@@ -62,7 +62,6 @@ public class StatisticPanel extends JPanel {
                 topTenButton.addActionListener(e -> {
                     StringBuilder message = new StringBuilder();
                     ArrayList<String> records = user.wordBuilderStatistic.getTopTen();
-                    System.out.println(records);
                     for (String record:records){
                         message.append(records.indexOf(record)+1).append(". ").append(record).append("\n");
                     }

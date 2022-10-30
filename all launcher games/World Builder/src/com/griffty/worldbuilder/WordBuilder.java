@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import static com.griffty.Launcher.profileChooser.gameMenuStatic;
+import static com.griffty.Launcher.profileChooser.saveData;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 import static java.awt.Color.BLACK;
@@ -62,7 +63,7 @@ public class WordBuilder extends JFrame {
             user = new User("guest");
         }
         initGUI();
-        setTitle("World Builder");
+        setTitle("Word Builder");
         setVisible(true);
         setResizable(true);
         pack();
@@ -79,8 +80,6 @@ public class WordBuilder extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(TAN);
         add(mainPanel, CENTER);
-
-
         //score panel
         scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.X_AXIS));
         scorePanel.setBackground(TAN);
@@ -165,21 +164,30 @@ public class WordBuilder extends JFrame {
                 resizeWindow();
             }
         });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveData();
+            }
+        });
     }
 
     private void click(LetterPanel letterPanel){
-        int wordLength = word.length();
-        if (!letterPanel.isEmpty() && word.length()<MAX){
-            played[wordLength].copy(letterPanel);
-            word += letterPanel.getLetter();
-            points += letterPanel.getPoints();
+        if (word.length()<MAX) {
+            int wordLength = word.length();
+            System.out.println(wordLength);
+            if (!letterPanel.isEmpty()){
+                played[wordLength].copy(letterPanel);
+                word += letterPanel.getLetter();
+                points += letterPanel.getPoints();
+            }
+            int col = letterPanel.getColumn();
+            for (int row = 0; row < ROWS - 1; row++) {
+                board[row][col].copy(board[row + 1][col]);
+            }
+            board[ROWS - 1][col].setEmpty();
+            updateButtonsAndPoints();
         }
-        int col = letterPanel.getColumn();
-        for (int row = 0; row<ROWS-1; row++){
-            board[row][col].copy(board[row+1][col]);
-        }
-        board[ROWS-1][col].setEmpty();
-        updateButtonsAndPoints();
     }
     private void updateButtonsAndPoints(){
         if (word.length() == 0){
@@ -291,6 +299,7 @@ public class WordBuilder extends JFrame {
             newGame();
         }else{
             gameMenuStatic();
+            dispose();
         }
     }
     private void newGame(){
