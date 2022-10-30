@@ -18,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/Maze Generator/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/SlidingTitles/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../all launcher games/World Builder/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../all launcher games/Watch Your Step/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

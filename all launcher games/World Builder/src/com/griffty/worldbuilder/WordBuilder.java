@@ -12,8 +12,10 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
+import static com.griffty.Launcher.profileChooser.gameMenuStatic;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 import static java.awt.Color.BLACK;
@@ -50,6 +52,9 @@ public class WordBuilder extends JFrame {
     private final JButton undoButton = new JButton("Undo");
     private final JButton clearButton = new JButton("Clear");
     private User user;
+    private final ArrayList<Integer> records = new ArrayList<>();
+    private final ArrayList<String> username = new ArrayList<>();
+    private final ArrayList<String> date = new ArrayList<>();
 
     public WordBuilder(){
         user = profileChooser.user;
@@ -227,45 +232,65 @@ public class WordBuilder extends JFrame {
         }
     }
     private void endGame(){
-        ArrayList<String> records = new ArrayList<>();
-        int index = 0;
+
         try {
-            BufferedReader in = new BufferedReader(new FileReader(DOCUMENTS+FILENAME));
+            BufferedReader in = new BufferedReader(new FileReader(DOCUMENTS + FILENAME));
             String s = in.readLine();
-            while (!(s==null)){
-                records.add(s);
-                int indexOfBlank = s.indexOf(" ");
-                String scoreString = s.substring(0, indexOfBlank);
-                int oldScore = Integer.parseInt(scoreString);
-                if (oldScore>score){
-                    index++;
-                }
+            while (s!=null){
+                Integer newRecord = Integer.valueOf(s.substring(s.indexOf(":")+2, s.indexOf(";")));
+                String userN = s.substring(0, s.indexOf(":"));
+                String dt = s.substring(s.indexOf(";")+2);
+                records.add(newRecord);
+                username.add(userN);
+                date.add(dt);
                 s = in.readLine();
             }
-            in.close();
         }catch (FileNotFoundException e){
-            String message = "Score file was not found";
+            String message = "Data file was not found!";
             JOptionPane.showMessageDialog(this, message);
-        }catch (IOException | NumberFormatException e){
-            String message = "Some error occurred, new height score list will be created";
+        } catch (IOException e) {
+            String message = "Data cannot be read";
             JOptionPane.showMessageDialog(this, message);
         }
-
-        if (index<10){
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            Date date = new Date();
-            String newRecord = score + " " + dateFormat.format(date) + ":" + user.getName();
-            records.add(newRecord);
-            if (records.size()>10){
-                records.remove(9);
+        if (score!=0) {
+            sortArrays();
+            if (records.size() < 10) {
+                for (int i = records.size(); i < 10; i++) {
+                    records.add(0, 0);
+                    username.add(0, "");
+                    date.add(0, "");
+                }
             }
-            saveRecord(records);
+            for (int i = records.size() - 1; i != -1; i--) {
+                if ((score >= records.get(i))) {
+                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    Date dat = new Date();
+                    records.add(i, score);
+                    username.add(i, user.getName()+user.getTAG());
+                    date.add(i, dateFormat.format(dat));
+                    break;
+                }
+            }
+            for (int i = records.size()-1; i >= 0 ; i--) {
+                if (records.get(i) == 0) {
+                    records.remove(i);
+                    username.remove(i);
+                    date.remove(i);
+                }
+            }
+            if (records.size()>10){
+                records.remove(0);
+                username.remove(0);
+                date.remove(0);
+            }
+            sortArrays();
+            saveRecord();
         }
         int choice = JOptionPane.showConfirmDialog(this, "Do you want to play again?", "Play again?",  JOptionPane.YES_NO_OPTION);
         if (choice == YES_OPTION){
             newGame();
         }else{
-            System.exit(999);
+            gameMenuStatic();
         }
     }
     private void newGame(){
@@ -284,11 +309,30 @@ public class WordBuilder extends JFrame {
         scoreLabel.setText(score+"");
         updateButtonsAndPoints();
     }
-    private void saveRecord(ArrayList<String> records){
+    private void sortArrays(){
+        if (records.size() !=0) {
+            for (int i = records.size() - 1; i != 0; i--) {
+                if (!(records.get(i) >= records.get(i - 1))) {
+                    Collections.swap(records, i, i - 1);
+                    Collections.swap(username, i, i - 1);
+                    Collections.swap(date, i, i - 1);
+                }
+            }
+            for (int i = records.size() - 1; i != 0; i--) {
+                if (!(records.get(i) >= records.get(i - 1))) {
+                    sortArrays();
+                    break;
+                }
+            }
+        }
+    }
+    private void saveRecord(){
+
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(DOCUMENTS+FILENAME));
-            for (String record : records) {
-                out.write(record);
+            for (int i = 0; i < records.size()-1; i++) {
+                String s = username.get(i) + ": " + records.get(i) + "; " + date.get(i);
+                out.write(s);
                 out.newLine();
             }
             out.close();

@@ -6,11 +6,10 @@ import griffty.TitleLabel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.Random;
 
+import static com.griffty.Launcher.profileChooser.gameMenuStatic;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.PAGE_START;
 import static java.awt.Color.black;
@@ -50,14 +49,11 @@ public class WatchYourStep extends JFrame {
         for(int row = 0; row < GRIDSIZE; row++){
             for (int col = 0; col < GRIDSIZE; col++){
                 terrain[row][col] = new TerrainButton(row, col);
-                terrain[row][col].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        TerrainButton button = (TerrainButton) e.getSource();
-                        int row = button.getRow();
-                        int col = button.getCol();
-                        clickTerrain(row,col);
-                    }
+                terrain[row][col].addActionListener(e -> {
+                    TerrainButton button = (TerrainButton) e.getSource();
+                    int row1 = button.getRow();
+                    int col1 = button.getCol();
+                    clickTerrain(row1, col1);
                 });
                 centerPanel.add(terrain[row][col]);
             }
@@ -66,11 +62,11 @@ public class WatchYourStep extends JFrame {
     private void clickTerrain(int row, int col) {
         user.watchYourStepStatistic.addTilesOpened();
         if (terrain[row][col].hasHole()) {
+            setAllReveal();
             String message = "Game over. Want try again?";
             promtToNewGame(message);
         } else {
             check(row, col);
-            checkNeighbors(row, col);
             if ((GRIDSIZE*GRIDSIZE)-NUMBEROFHOLES == totalRevealed){
                 user.watchYourStepStatistic.addWin();
                 String message = "You win. Try again?";
@@ -79,7 +75,8 @@ public class WatchYourStep extends JFrame {
                     newGame();
                 }
                 else {
-                    System.exit(999);
+                    gameMenuStatic();
+                    dispose();
                 }
             }
         }
@@ -104,6 +101,16 @@ public class WatchYourStep extends JFrame {
         check(row-1 ,col+1);
         check(row-1 ,col);
     }
+    private void setAllReveal(){
+        for (int col = 0; col < GRIDSIZE; col++){
+            for (int row = 0; row<GRIDSIZE; row++){
+                if (!terrain[row][col].isRevealed()){
+                    terrain[row][col].reveal(true);
+                }
+            }
+        }
+    }
+    
     private void setHoles(){
         Random rand = new Random();
         for( int i = 0; i<NUMBEROFHOLES; i++){
@@ -138,7 +145,8 @@ public class WatchYourStep extends JFrame {
             newGame();
         }
         else {
-            System.exit(999);
+            gameMenuStatic();
+            dispose();
         }
     }
     private void newGame(){

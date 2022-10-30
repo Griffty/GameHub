@@ -1,7 +1,11 @@
 package com.griffty.watchyourstep;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serial;
 
 import static java.awt.Color.black;
@@ -16,7 +20,17 @@ public class TerrainButton extends JButton {
     private int nextToHoles = 0;
     private boolean hole = false;
     private boolean revealed = false;
+    private ImageIcon bombIcon;
     TerrainButton(int row, int col){
+        try {
+            InputStream bombStream = getClass().getResourceAsStream("/Bomb.png");
+            assert bombStream != null;
+            bombIcon = new ImageIcon(ImageIO.read(bombStream));
+        }catch (IOException e){
+            String message = "System files cannot be uploaded";
+            JOptionPane.showMessageDialog(null, message);
+        }
+
         this.row=row;
         this.col=col;
         Dimension size = new Dimension(SIZE, SIZE);
@@ -47,7 +61,7 @@ public class TerrainButton extends JButton {
         revealed = reveal;
         if (revealed){
             if (hasHole()){
-                setBackground(black);
+                setIcon(bombIcon);
             }else{
                 setBackground(cyan);
                 if (isNextToHoles()){
@@ -60,6 +74,7 @@ public class TerrainButton extends JButton {
         }
     }
     public void reset(){
+        setIcon(null);
         hole = false;
         revealed = false;
         nextToHoles = 0;

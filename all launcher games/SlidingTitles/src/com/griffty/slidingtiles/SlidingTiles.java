@@ -23,14 +23,14 @@ public class SlidingTiles extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
     private static final String FILENAME = "/slidingTilesImage.jpg";
-    private int tileSize = 50;
+    private int tileSize = 75;
     private int gridSize = 4;
     private BufferedImage image = null;
     private static final int UP = 0;
     private static final int DOWN = 1;
     private static final int LEFT = 2;
     private static final int RIGHT = 3;
-    private static final int IMAGESIZE = 200;
+    private static final int IMAGESIZE = 300;
 
     private TileButton[][] tile = new TileButton[gridSize][gridSize];
 
